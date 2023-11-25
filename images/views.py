@@ -54,10 +54,9 @@ def s3_generate_presigned_post(*, file_path: str, file_type: str):
         ],
         ExpiresIn=expires_in,
     )
-
+    print(presigned_data)
     return presigned_data
 
 def file_generate_name(original_file_name):
     extension = pathlib.Path(original_file_name).suffix
-
-    return f"{uuid4().hex}{extension}"
+    return f"{original_file_name}{uuid4().hex}{extension}"
