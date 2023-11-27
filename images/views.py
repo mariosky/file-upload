@@ -19,8 +19,8 @@ def upload_start(request):
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
     
     file_name = file_generate_name(data['file_name'])
-    
     presigned_data = s3_generate_presigned_post(file_path=file_name,file_type=data['file_type'])
+    print(file_name, presigned_data) 
     return JsonResponse(presigned_data)
     
 @csrf_exempt
@@ -38,8 +38,8 @@ def upload_finish(request):
 def s3_generate_presigned_post(*, file_path: str, file_type: str):
     s3_client = boto3.client( service_name="s3")
 
-    acl = 'private'
-    expires_in = 100
+    acl =  'public-read' # 'private'
+    expires_in = 1000
 
     presigned_data = s3_client.generate_presigned_post(
         's3-web-tijuana',
@@ -54,9 +54,10 @@ def s3_generate_presigned_post(*, file_path: str, file_type: str):
         ],
         ExpiresIn=expires_in,
     )
-    print(presigned_data)
     return presigned_data
 
 def file_generate_name(original_file_name):
-    extension = pathlib.Path(original_file_name).suffix
-    return f"{original_file_name}{uuid4().hex}{extension}"
+    name = pathlib.Path(original_file_name)
+    extension = name.suffix
+    file_name = name.stem
+    return f"original/{file_name}-{uuid4().hex}{extension}"
