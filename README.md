@@ -1,5 +1,46 @@
 # file-upload
 
+## SQS 
+
+### Ejemplo de Access Policy
+
+Para permitir que S3 envíe eventos a SQS:
+```
+{
+  "Version": "2012-10-17",
+  "Id": "__default_policy_ID",
+  "Statement": [
+    {
+      "Sid": "__owner_statement",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::<user_id>:root"
+      },
+      "Action": "SQS:*",
+      "Resource": "arn:aws:sqs:us-east-1:<user_id>:MyQueue"
+    },
+    {
+      "Sid": "example-statement-ID",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "s3.amazonaws.com"
+      },
+      "Action": "SQS:SendMessage",
+      "Resource": "arn:aws:sqs:us-east-1:<user_id>:MyQueue",
+      "Condition": {
+        "StringEquals": {
+          "aws:SourceAccount": "<user_id>"
+        },
+        "ArnLike": {
+          "aws:SourceArn": "arn:aws:s3:::<bucket_name>"
+        }
+      }
+    }
+  ]
+}
+```
+
+
 ### Redis CLI
 Instalación
 ```
@@ -19,3 +60,4 @@ docker kill redis
 docker rm <contenedor>
 docker stop <contenedor> 
 docker run --name redis -p 6379:6379 redis:alpine
+
