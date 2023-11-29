@@ -5,7 +5,7 @@
 ### Ejemplo de Access Policy
 
 Para permitir que S3 envíe eventos a SQS:
-```
+```json
 {
   "Version": "2012-10-17",
   "Id": "__default_policy_ID",
@@ -61,3 +61,25 @@ docker rm <contenedor>
 docker stop <contenedor> 
 docker run --name redis -p 6379:6379 redis:alpine
 
+## docker-compose.yml 
+
+```yaml
+version: '3'
+
+# definiciones de los servicios
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+    - "6379:6379"
+  worker:
+    build: '.'
+    depends_on:
+      - redis
+      #volumes:
+       # - ./Worker:/code
+    command: python worker.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+```
