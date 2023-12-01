@@ -54,10 +54,10 @@ SECRET_KEY = 'django-insecure-lmm#(dg9rxa8r6p@w)7qlo$krm(x&3kt$rila%46!h%_*!oz)4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ittweb.ddns.net', '54.146.67.173']
-CORS_ALLOWED_ORIGINS = ['http://ittweb.ddns.net:8080','http://54.146.67.173:8080']
+ALLOWED_HOSTS = ['ittweb.ddns.net', '44.219.209.251']
+CORS_ALLOWED_ORIGINS = ['http://ittweb.ddns.net:8080','http://44.219.209.251:8080']
 CSRF_TRUSTED_ORIGINS = [
-    "http://ittweb.ddns.net:8080",'http://54.146.67.173:8080'
+    "http://ittweb.ddns.net:8080",'http://44.219.209.251:8080'
 ]
 # Application definition
 
