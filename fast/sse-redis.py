@@ -11,7 +11,7 @@ import redis
 import asyncio
 import aioredis
 
-REDIS_HOST='localhost'
+REDIS_HOST='172.31.76.34'
 REDIS_PORT=6379
 
 

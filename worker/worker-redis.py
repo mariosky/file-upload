@@ -83,7 +83,7 @@ while run:
         except Exception as e:
             print(e)
             client.delete_message( QueueUrl=QUEUE_URL, ReceiptHandle=receipt_handle )
-    print('Waiting Loop')
+    #print('Waiting Loop')
     
         
 

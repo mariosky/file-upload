@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io
 
+# Cloud 9 files
+.~c9_invoke_*
+
 ### OSX ###
 .DS_Store
 .AppleDouble
