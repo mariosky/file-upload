@@ -4,13 +4,49 @@ import json
 import s3image
 import sys
 import redis 
+import os
 
-QUEUE_URL = 'https://sqs.us-east-1.amazonaws.com/052353881089/MyQueue'
-REDIS_URL = 'localhost'
+#import ssl
+#print(ssl.OPENSSL_VERSION)
 
-client = boto3.client('sqs')
+#import urllib3
+#URL = 'https://localhost:4433/'
+
+#http = urllib3.PoolManager(
+#    ca_certs='cert.pem',
+#    cert_reqs='CERT_REQUIRED',
+#)
+#r = http.request('GET', URL)
+#print(r.data.decode('utf-8'))
+
+session = boto3.Session()
+
+# Access the credentials from the session
+#credentials = session.get_credentials()
+#current_credentials = credentials.get_frozen_credentials()
+
+#print("Access Key:", current_credentials.access_key)
+#print("Secret Key:", current_credentials.secret_key)
+#print("Session Token:", current_credentials.token)
+
+QUEUE_URL = os.environ['QUEUE_URL'] 
+REDIS_URL = os.environ['REDIS_HOST']  
+
+client = boto3.client('sqs', region_name='us-east-1')
+#sts_client = boto3.client('sts') 
+#assumed_role_object = sts_client.assume_role(
+#    RoleArn="arn:aws:iam::052353881089:role/LabRole",
+#    RoleSessionName="SessionName"
+#)
+#expiration = sts_client['Credentials']['Expiration']
+
+#print(expiration)
+#print(sts_client['Credentials'])
 
 
+
+#print(sts_client.get_caller_identity())
+#print(client._endpoint)
 r = redis.Redis(host=REDIS_URL, decode_responses=True)
 
 stop = len(sys.argv) > 1 and sys.argv[1] == 'stop'
@@ -47,6 +83,7 @@ while run:
         except Exception as e:
             print(e)
             client.delete_message( QueueUrl=QUEUE_URL, ReceiptHandle=receipt_handle )
+    print('Waiting Loop')
     
         
 

@@ -94,16 +94,14 @@ async def event_generator(filename: str):
         async with redis.client() as conn:
             val = await conn.get(filename)
    
+        print(filename, val)
         if val == "ok":
             data = json.dumps({'content':filename})
+            yield f"data: {data}\n\n"
+            break
         else: 
             data = json.dumps({'content':'not-found'})
-            
-        print(filename, data)
-        yield f"data: {data}\n\n"
-        
-        if val == "ok":
-            break
+            yield f"data: {data}\n\n"
         await asyncio.sleep(1)  # Interval between messages
 
 @app.get("/events/{filename}")
