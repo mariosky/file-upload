@@ -15,7 +15,8 @@ origins = [
 ```
 Por último agrega el nombre correcto de tu bucket en el método `s3_client.generate_presigned_post`. 
 
-Como tarea esto se puede poner en variables de entorno o en un archivo de settings.
+*Como tarea esto se puede poner en variables de entorno o en un archivo de settings.*
+
 Ahora si corremos el server.
 ```bash
 uvicorn sse-redis:app --reload --host 0.0.0.0 --port 8000
