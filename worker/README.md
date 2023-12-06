@@ -24,7 +24,7 @@ uvicorn sse-redis:app --reload --host 0.0.0.0 --port 8000
 ## React Client
 ```
 export NODE_OPTIONS=--openssl-legacy-provider
-REACT_APP_BACKEND_URL=http://44.219.209.251:8000 npm start
+REACT_APP_BACKEND_URL=<url del server> npm start
 ```
 
 ## Redis Container
