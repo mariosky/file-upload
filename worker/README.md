@@ -1,6 +1,6 @@
 
 ## Servidor FastAPI
-Primero en el código de see-redis.py` cambiamos la variable:
+Primero en el código de `see-redis.py` cambiamos la variable:
 
 ```env
 REDIS_HOST='172.31.76.34'
