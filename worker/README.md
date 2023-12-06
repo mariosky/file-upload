@@ -31,7 +31,7 @@ REACT_APP_BACKEND_URL=<url del server> npm start
 
 El siguiente comando ejecuta el contenedor:
 ```
-docker run redis:alpine  -p 6379:6379
+docker run -p 6379:6379 redis:alpine 
 ```
 
 ## Worker Local
