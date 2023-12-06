@@ -65,6 +65,14 @@ recrear la imagen.
 docker build -t image-worker .
 ```
 
+Revisar las claves en redis:
+```python
+import redis
+r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+r.keys('*')
+```
+
+
 sudo mount /dev/sdf /var/lib/docker/
 sudo systemctl stop docker
 sudo systemctl start docker
