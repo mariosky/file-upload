@@ -36,7 +36,7 @@ docker run redis:alpine  -p 6379:6379
 
 ## Worker Local
 Exportamos las variables de entorno:
-```
+```bash
 export REDIS_HOST=localhost
 export QUEUE_URL=<QueueUrl>
 ```
