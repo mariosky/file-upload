@@ -41,7 +41,7 @@ export REDIS_HOST=localhost
 export QUEUE_URL=<QueueUrl>
 ```
 ```
-python worker.py
+python worker-redis.py
 ```
 
 ## Worker Container
