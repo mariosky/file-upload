@@ -11,7 +11,7 @@ to derive the container from. An image developer can define image defaults relat
     network settings
     runtime constraints on CPU and memory
 
-
+```
 docker run --env-file env.list image-worker python worker-redis.py
 uvicorn sse-redis:app --reload --host 0.0.0.0 --port 8000
 docker run --name redis -p 6379:6379 redis:alpine
@@ -26,6 +26,7 @@ docker start  `docker ps -q -l` # restart it in the background
 docker attach `docker ps -q -l` # reattach the terminal & stdin
 
 docker info
+```
 
 Caution - These steps depend on your current /var/lib/docker being an actual directory (not a symlink to another location).
 
