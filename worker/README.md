@@ -90,4 +90,4 @@ Correr imagen y ejecutar bash o sh de manera interactiva:
 ```bash
 docker run -it --entrypoint /bin/sh python-worker
 ```
-
+docker build . -t python-worker -f ./Dockerfile.python
