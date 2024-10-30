@@ -86,6 +86,8 @@ docker run --env-file env.list image-worker python worker-redis.py
 python worker-redis.py [stop]
 
 
-
-
+Correr imagen y ejecutar bash o sh de manera interactiva:
+```bash
+docker run -it --entrypoint /bin/sh python-worker
+```
 
