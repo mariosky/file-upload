@@ -7,9 +7,9 @@ def get_aws_config():
     config.read('/home/ec2-user/.aws/credentials')
     
     aws_config = {
-     'AWS_ACCESS_KEY_ID':config['default']['aws_access_key_id'],
-     'AWS_ACCESS_KEY': config['default']['aws_secret_access_key'], 
-     'AWS_SESSION_TOKEN': config['default']['aws_session_token'],
+     'AWS_ACCESS_KEY_ID':config['DEFAULT']['aws_access_key_id'],
+     'AWS_ACCESS_KEY': config['DEFAULT']['aws_secret_access_key'], 
+     'AWS_SESSION_TOKEN': config['DEFAULT']['aws_session_token'],
      'AWS_REGION_NAME': 'us-east-1'
      }
     return aws_config
