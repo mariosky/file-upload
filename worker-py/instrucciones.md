@@ -48,7 +48,7 @@ docker logs -f worker2
 ## 4. Encolar imágenes de prueba
 
 Ver el directorio con imágenes:
-Si quieres cargar más imágenes esta es una muestra tomada de (https://www.kaggle.com/datasets/steubk/wikiart?resource=download)[Kaggle].
+Si quieres cargar más imágenes esta es una muestra tomada de [Kaggle](https://www.kaggle.com/datasets/steubk/wikiart?resource=download).
 
 ```bash
 ls images
