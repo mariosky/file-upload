@@ -11,11 +11,15 @@
 ├── images/
 │   ├── a.y.-jackson_wilderness-deese-bay.jpg
 │   ├── caravaggio_boy-with-a-basket-of-fruit.jpg
-│   └── ... (98 más imágenes .jpg)
+│   └── ... (98 imágenes más)
 ├── enqueue_images.py
 ├── s3image.py
 └── instrucciones.md
 ```
+
+---
+
+# Parte 1: Docker manual (entender los pasos)
 
 ## 1. Construir la imagen del worker
 
@@ -92,8 +96,51 @@ docker stop worker1 worker2 redis
 docker rm worker1 worker2 redis
 ```
 
-## Notas
+## Notas (Docker manual)
 
 - `host.docker.internal` permite que los contenedores se conecten a servicios en la máquina host (Redis en `localhost:6379`).
 - En Linux, si `host.docker.internal` no funciona, usa la IP de la máquina host o `--network host`.
 - El worker maneja `SIGTERM` correctamente, así que `docker stop` lo detiene limpiamente.
+
+---
+
+# Parte 2: Docker Compose (automatizar)
+
+Después de entender los pasos manuales, usa Docker Compose para levantar todo con un solo comando.
+
+## 1. Lanzar todo
+
+```bash
+docker compose up -d
+```
+
+Esto levanta:
+- **Redis** en el puerto 6379
+- **2 workers** que consumen de la cola
+
+Ver logs:
+```bash
+docker compose logs -f worker
+```
+
+## 2. Encolar imágenes
+
+Igual que en la Parte 1 (Opción A o B).
+
+## 3. Escalar workers (opcional)
+
+```bash
+docker compose up -d --scale worker=5
+```
+
+## 4. Detener todo
+
+```bash
+docker compose down
+```
+
+## Notas (Docker Compose)
+
+- Los workers se conectan a Redis por el nombre de servicio (`REDIS_HOST=redis`), gracias a la red interna de Docker Compose. No hace falta `host.docker.internal`.
+- El `depends_on` con `condition: service_healthy` espera a que Redis esté listo antes de arrancar los workers.
+- El worker sigue teniendo su loop de reconexión como respaldo.
