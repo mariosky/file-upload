@@ -47,10 +47,11 @@ docker logs -f worker2
 
 ## 4. Encolar imágenes de prueba
 
-Crear un directorio con imágenes:
+Ver el directorio con imágenes:
+Si quieres cargar más imágenes esta es una muestra tomada de [https://www.kaggle.com/datasets/steubk/wikiart?resource=download](Kaggle).
+
 ```bash
-mkdir -p images
-cp *.jpg *.jpeg *.png images/ 2>/dev/null || true
+ls images
 ```
 
 Ejecutar el enqueuer (necesita `redis` instalado localmente o usar el contenedor de Redis):
