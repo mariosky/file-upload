@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io
 
+.Rhistory
+dump.rdb
+
 # Cloud 9 files
 .~c9_invoke_*
 
@@ -88,5 +91,6 @@ target/
 __pycache__/
 local_settings.py
 
+venv
 .env
 db.sqlite3

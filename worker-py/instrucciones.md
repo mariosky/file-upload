@@ -1,0 +1,98 @@
+# Instrucciones de prueba local
+
+## Estructura del proyecto
+
+```
+.
+├── worker/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── worker.py
+├── images/
+│   ├── a.y.-jackson_wilderness-deese-bay.jpg
+│   ├── caravaggio_boy-with-a-basket-of-fruit.jpg
+│   └── ... (98 más imágenes .jpg)
+├── enqueue_images.py
+├── s3image.py
+└── instrucciones.md
+```
+
+## 1. Construir la imagen del worker
+
+```bash
+docker build -t my-worker worker/
+```
+
+## 2. Lanzar Redis
+
+```bash
+docker run -d --name redis -p 6379:6379 redis:alpine
+```
+
+## 3. Lanzar uno o varios workers
+
+```bash
+# Worker 1
+docker run -d --name worker1 -e REDIS_HOST=host.docker.internal my-worker
+
+# Worker 2 (opcional, para probar concurrencia)
+docker run -d --name worker2 -e REDIS_HOST=host.docker.internal my-worker
+```
+
+Ver logs:
+```bash
+docker logs -f worker1
+docker logs -f worker2
+```
+
+## 4. Encolar imágenes de prueba
+
+Crear un directorio con imágenes:
+```bash
+mkdir -p images
+cp *.jpg *.jpeg *.png images/ 2>/dev/null || true
+```
+
+Ejecutar el enqueuer (necesita `redis` instalado localmente o usar el contenedor de Redis):
+
+### Opción A: Con Python local
+```bash
+export REDIS_HOST=localhost
+python enqueue_images.py images/
+```
+
+### Opción B: Con Docker (si no tienes Python local)
+```bash
+docker run --rm \
+  -e REDIS_HOST=host.docker.internal \
+  -v "$(pwd)/images:/images" \
+  -v "$(pwd)/enqueue_images.py:/enqueue_images.py" \
+  python:3.12-slim \
+  bash -c "pip install redis && python /enqueue_images.py /images"
+```
+
+## 5. Verificar que los workers procesaron los mensajes
+
+```bash
+docker logs worker1
+docker logs worker2
+```
+
+Deberías ver mensajes como:
+```
+Imagen "foto1.jpg" procesada exitosamente
+Imagen "foto2.png" procesada exitosamente
+```
+
+## 6. Detener todo
+
+```bash
+docker stop worker1 worker2 redis
+docker rm worker1 worker2 redis
+```
+
+## Notas
+
+- `host.docker.internal` permite que los contenedores se conecten a servicios en la máquina host (Redis en `localhost:6379`).
+- En Linux, si `host.docker.internal` no funciona, usa la IP de la máquina host o `--network host`.
+- El worker maneja `SIGTERM` correctamente, así que `docker stop` lo detiene limpiamente.
